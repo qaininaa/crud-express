@@ -39,5 +39,3 @@ bun.lockb
 coverage/
 *.lcov
 
-pnpm-lock.json
-package-lock.json
