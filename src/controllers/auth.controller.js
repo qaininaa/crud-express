@@ -22,12 +22,9 @@ export const LoginUserController = async (req, res) => {
   try {
     const dataUser = req.body;
 
-    const user = await loginUser(dataUser);
+    const { accessToken } = await loginUser(dataUser);
 
-    res.json({
-      message: "Succes login",
-      data: user,
-    });
+    res.json({ token: accessToken });
   } catch (error) {
     res.status(500).json({
       message: "Failed login",

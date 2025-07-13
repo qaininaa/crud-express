@@ -1,6 +1,6 @@
 import bcrypt from "bcrypt";
 import * as authRepo from "../repositories/auth.repository.js";
-import prisma from "../config/db.js";
+import jwt from "jsonwebtoken";
 
 export const createUser = async (data) => {
   const { email, name, password } = data;
@@ -27,5 +27,17 @@ export const loginUser = async (data) => {
   const validate = await bcrypt.compare(password, user.password);
   if (!validate) throw new Error("Wrong password");
 
-  return user;
+  const access_secret = process.env.ACCESS_TOKEN_SECRET;
+  const refresh_secret = process.env.REFRESH_TOKEN_SECRET;
+
+  const payload = {
+    id: user.id,
+    email: user.email,
+  };
+
+  const accessToken = jwt.sign(payload, access_secret, { expiresIn: "15m" });
+
+  return {
+    accessToken,
+  };
 };

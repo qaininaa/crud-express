@@ -5,10 +5,11 @@ import {
   getProductByIdController,
   updatePutProductController,
 } from "../controllers/product.controller.js";
+import { authMiddleware } from "../middlewares/auth.middleware.js";
 
 const router = express.Router();
 
-router.get("/", getAllProductsController);
+router.get("/", authMiddleware, getAllProductsController);
 router.get("/:id", getProductByIdController);
 router.post("/", createProductController);
 router.put("/:id", updatePutProductController);
