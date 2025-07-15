@@ -12,9 +12,7 @@ export const createUser = async (data) => {
 
   const hashedPassword = await bcrypt.hash(password, 10);
 
-  const user = await authRepo.createUser({ name, email, hashedPassword });
-
-  return user;
+  return await authRepo.createUser({ name, email, hashedPassword });
 };
 
 export const loginUser = async (data) => {
@@ -39,7 +37,12 @@ export const loginUser = async (data) => {
     expiresIn: process.env.ACCESS_EXPIRE,
   });
 
+  const refreshToken = jwt.sign(payload, refresh_secret, {
+    expiresIn: process.env.REFRESH_EXPIRE,
+  });
+
   return {
     accessToken,
+    refreshToken,
   };
 };
