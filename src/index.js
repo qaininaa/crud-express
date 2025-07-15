@@ -1,6 +1,8 @@
 import express, { urlencoded } from "express";
 import dotenv from "dotenv";
 import cookieParser from "cookie-parser";
+import cors from "cors";
+
 import productRouter from "./routes/product.routes.js";
 import userRouter from "./routes/user.routes.js";
 dotenv.config();
@@ -10,6 +12,7 @@ const PORT = process.env.PORT;
 
 app.use(express.json());
 app.use(cookieParser());
+app.use(cors({ credentials: true, origin: process.env.ORIGIN }));
 app.use(urlencoded({ extended: false }));
 
 app.use("/products", productRouter);
