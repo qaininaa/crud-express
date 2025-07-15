@@ -42,7 +42,7 @@ export const loginUserController = async (req, res) => {
 };
 
 export const refreshController = (req, res) => {
-  const refreshToken = req.cookies.jwt;
+  const refreshToken = req.cookies.refreshToken;
   const refreshSecret = process.env.REFRESH_TOKEN_SECRET;
   const accessSecret = process.env.ACCESS_TOKEN_SECRET;
 
