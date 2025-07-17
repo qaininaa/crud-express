@@ -45,5 +45,6 @@ export const loginUser = async (data) => {
   return {
     accessToken,
     refreshToken,
+    payload,
   };
 };

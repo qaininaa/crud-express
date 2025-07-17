@@ -23,7 +23,7 @@ export const loginUserController = async (req, res) => {
   try {
     const dataUser = req.body;
 
-    const { accessToken, refreshToken } = await loginUser(dataUser);
+    const { accessToken, refreshToken, payload } = await loginUser(dataUser);
 
     res.cookie("refreshToken", refreshToken, {
       sameSite: "none",
@@ -32,7 +32,7 @@ export const loginUserController = async (req, res) => {
       maxAge: parseInt(process.env.REFRESH_TOKEN_AGE),
     });
 
-    res.json({ token: accessToken });
+    res.json({ token: accessToken, role: payload.role });
   } catch (error) {
     res.status(500).json({
       message: "Failed login",
