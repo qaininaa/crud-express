@@ -1,17 +1,16 @@
 import express from "express";
-import {
-  createProductController,
-  getAllProductsController,
-  getProductByIdController,
-  updatePutProductController,
-} from "../controllers/product.controller.js";
-import { authMiddleware } from "../middlewares/auth.middleware.js";
+import * as productController from "../controllers/product.controller.js";
+import { authRolesMidlleware } from "../middlewares/authRoles.middleware.js";
 
 const router = express.Router();
 
-router.get("/", authMiddleware, getAllProductsController);
-router.get("/:id", getProductByIdController);
-router.post("/", createProductController);
-router.put("/:id", updatePutProductController);
+router.get(
+  "/",
+  authRolesMidlleware("ADMIN"),
+  productController.getAllProductsController
+);
+router.get("/:id", productController.getProductByIdController);
+router.post("/", productController.createProductController);
+router.put("/:id", productController.updatePutProductController);
 
 export default router;

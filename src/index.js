@@ -5,6 +5,8 @@ import cors from "cors";
 
 import productRouter from "./routes/product.routes.js";
 import userRouter from "./routes/user.routes.js";
+import { authMiddleware } from "./middlewares/auth.middleware.js";
+
 dotenv.config();
 
 const app = express();
@@ -15,7 +17,8 @@ app.use(cookieParser());
 app.use(cors({ credentials: true, origin: process.env.ORIGIN }));
 app.use(urlencoded({ extended: false }));
 
-app.use("/products", productRouter);
 app.use("/users", userRouter);
+
+app.use("/products", authMiddleware, productRouter);
 
 app.listen(PORT, () => console.log("you are listening on port", PORT));
