@@ -9,6 +9,6 @@ const router = express.Router();
 
 router.post("/register", createUserController);
 router.post("/login", loginUserController);
-router.post("/refresh", refreshController);
+router.get("/refresh", refreshController);
 
 export default router;
