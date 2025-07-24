@@ -11,20 +11,13 @@ dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT;
-const allowedOrigins = process.env.ORIGIN.split(",") || [];
 
 app.use(express.json());
 app.use(cookieParser());
 app.use(
   cors({
     credentials: true,
-    origin: function (origin, callback) {
-      if (allowedOrigins.includes(origin)) {
-        callback(null, true);
-      } else {
-        callback(new Error("Not allowed by CORS"));
-      }
-    },
+    origin: process.env.ORIGIN,
   })
 );
 app.use(urlencoded({ extended: false }));
