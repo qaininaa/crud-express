@@ -17,6 +17,20 @@ app.use(cookieParser());
 app.use(cors({ credentials: true, origin: process.env.ORIGIN }));
 app.use(urlencoded({ extended: false }));
 
+app.get("/", (req, res) => {
+  const currentTime = new Date().toLocaleString();
+  const serverUptime = process.uptime().toFixed(2) + " seconds";
+
+  res.json({
+    message: "Welcome to Karinina API",
+    version: "1.0.0",
+    serverTime: currentTime,
+    serverUptime: serverUptime,
+    environment: process.env.NODE_ENV || "development",
+    status: "operational",
+  });
+});
+
 app.use("/users", userRouter);
 
 app.use("/products", authMiddleware, productRouter);
