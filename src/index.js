@@ -11,10 +11,11 @@ dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT;
+const allowedOrigins = process.env.ORIGIN.split(",") || [];
 
 app.use(express.json());
 app.use(cookieParser());
-app.use(cors({ credentials: true, origin: process.env.ORIGIN }));
+app.use(cors({ credentials: true, origin: allowedOrigins }));
 app.use(urlencoded({ extended: false }));
 
 app.use("/users", userRouter);
