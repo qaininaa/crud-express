@@ -15,7 +15,18 @@ const allowedOrigins = process.env.ORIGIN.split(",") || [];
 
 app.use(express.json());
 app.use(cookieParser());
-app.use(cors({ credentials: true, origin: allowedOrigins }));
+app.use(
+  cors({
+    credentials: true,
+    origin: function (origin, callback) {
+      if (allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
+  })
+);
 app.use(urlencoded({ extended: false }));
 
 app.get("/", (req, res) => {
